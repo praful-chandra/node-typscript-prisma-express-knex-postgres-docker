@@ -1,28 +1,24 @@
-version: "3.6"
-services: 
-    app:
-      build: .
-      ports: 
-        - 8000:8000
-        - 9229:9229 # enables debugging in VS Code
-      volumes:
-        - .:/app
-        - /app/node_modules
-      command: npm run dev
-      env_file: .env
-      depends_on:
-        - db
-    db:
-      image: postgres:11-alpine
-      restart: always
-      environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: oauth_dev
-        POSTGRES_HOST_AUTH_METHOD: trust
-      ports:
-        - 5432:5432
-      volumes:
-        - db-data:/var/lib/postgresql/data
-volumes:
-  db-data:
+services:
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    ports:
+      - 5432:5432 # enables connecting locally via psql
+    environment:
+      POSTGRES_DB: oauth_dev
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  app:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 8000:8000
+      - 9229:9229 # enables debugging in VS Code
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/oauth_dev
+      PORT: 8000

@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts",
-    "build": "rm -rf dist && tsc -p ."
+    "dev": "node -r ts-node/register --inspect=0.0.0.0 src/server.ts",
+    "build": "rm -rf dist && tsc -p .",
+    "db:console": "docker-compose exec postgres psql -h localhost -U postgres -d oauth_dev"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,9 @@
   "dependencies": {
     "@prisma/client": "^3.2.0",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "knex": "^0.95.11",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
