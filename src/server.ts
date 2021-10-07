@@ -11,5 +11,5 @@ app.listen(PORT, () => {
 });
 
 app.get('/', (req: Request, res:Response) => {
-    res.json({message : "reached the home of oauth2 server"});
+    res.json({message : "reached the home endpoint of oauth2 server"});
 });

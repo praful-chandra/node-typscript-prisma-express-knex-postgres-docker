@@ -5,16 +5,21 @@ services:
       ports: 
         - 8000:8000
         - 9229:9229 # enables debugging in VS Code
+      volumes:
+        - .:/app
+        - /app/node_modules
       command: npm run dev
       env_file: .env
       depends_on:
         - db
     db:
-      image: postgres:10.16
+      image: postgres:11-alpine
+      restart: always
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: password
-        POSTGRES_DB: postgres
+        POSTGRES_DB: oauth_dev
+        POSTGRES_HOST_AUTH_METHOD: trust
       ports:
         - 5432:5432
       volumes:
