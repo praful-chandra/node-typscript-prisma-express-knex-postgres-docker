@@ -1,1 +1,1 @@
-# Implementation of OAuth2 using node.
+# Template for typescript-node-express-postgres-prisma-knex-docker
