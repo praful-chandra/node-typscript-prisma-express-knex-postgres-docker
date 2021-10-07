@@ -4,6 +4,8 @@ services:
       build: .
       ports: 
         - 8000:8000
+        - 9229:9229 # enables debugging in VS Code
+      command: npm run dev
       env_file: .env
       depends_on:
         - db
